@@ -1418,14 +1418,34 @@ do{\
 
 	CGEImageFilterInterface* CGEDataParsingEngine::heartParser(const char* pstr, CGEMutipleEffectFilter* fatherFilter)
 	{
-        CGEHeartFilter* proc = new CGEHeartFilter;
-        if(!proc->init())
-        {
-            delete proc;
-            return nullptr;
-        }
-        if(fatherFilter != nullptr) fatherFilter->addFilter(proc);
-        return proc;
+        CGEImageFilterInterface* proc = nullptr;
+           float intensity, base;
+           int argNum;
+           if((argNum = sscanf(pstr, "%f%*c%f", &intensity, &base)) < 1)
+           {
+               LOG_ERROR_PARAM(pstr);
+               return nullptr;
+           }
+
+           auto* filter = createHeartFilter();
+
+           if(filter != nullptr)
+           {
+               proc = filter;
+               if(argNum == 2)
+               {
+                   filter->setBlurLevel(intensity * CGEHeartFilter::MAX_LERP_BLUR_INTENSITY);
+                   filter->setMipmapBase(base);
+               }
+               else
+               {
+                   filter->setIntensity(intensity);
+               }
+           }
+
+
+           if(fatherFilter != nullptr) fatherFilter->addFilter(proc);
+           return proc;
 	}
 
 

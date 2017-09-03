@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -73,7 +74,7 @@ public class TestCaseActivity extends AppCompatActivity {
                 Log.i(LOG_TAG, "Test case 1 clicked!\n");
 
                 String outputFilename = FileUtil.getPath() + "/blendVideo.mp4";
-                String inputFileName = FileUtil.getPath() +"/rec_1503978607733.mp4";
+                String inputFileName = Environment.getExternalStorageDirectory() +"/1.ts";
 //                        .getTextContent(CameraDemoActivity.lastVideoPathFileName);
                 if(inputFileName == null) {
                     showMsg("No video is recorded, please record one in the 2nd case.");
@@ -97,7 +98,7 @@ public class TestCaseActivity extends AppCompatActivity {
 
                 //bmp is used for watermark, (just pass null if you don't want that)
                 //and ususally the blend mode is CGE_BLEND_ADDREV for watermarks.
-                CGEFFmpegNativeLibrary.generateVideoWithFilter(outputFilename, inputFileName, "@square 1", 1.0f, bmp, CGENativeLibrary.TextureBlendMode.CGE_BLEND_ADDREV, 1.0f, false);
+                CGEFFmpegNativeLibrary.generateVideoWithFilter(outputFilename, inputFileName, "@heart 1", 1.0f, bmp, CGENativeLibrary.TextureBlendMode.CGE_BLEND_ADDREV, 1.0f, false);
 
                 showMsg("Done! The file is generated at: " + outputFilename);
                 Log.i(LOG_TAG, "Done! The file is generated at: " + outputFilename);

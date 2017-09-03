@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             "@hexa", //Beautify
             "@triple 1", //Beautify
             "@zoom 1", //Beautify
-            "@heart", //Beautify
+            "@heart 1", //Beautify
 
             "@beautify face 0.2 480 640", //Beautify
             "@beautify face 0.3 480 640", //Beautify

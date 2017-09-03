@@ -10,27 +10,31 @@
 
 static CGEConstString s_fshScale = CGE_SHADER_STRING_PRECISION_M
 (
+precision highp float;
 varying vec2 textureCoordinate;
 uniform sampler2D inputImageTexture;
 uniform sampler2D inputTexture2;
 
-void main()
-{
-   vec2 dstPos = (textureCoordinate - vec2(0.125, 0.125)) * 4.0/3.0;
+float inHeart (vec2 pos, vec2 center, float size) {
+  vec2 p = pos;
+
+  if (size == 0.0) return 0.0;
+  vec2 o = (p-center)/(1.6*size);
+  float tmp = o.x*o.x+o.y*o.y-0.3;
+  return step(tmp*tmp*tmp, o.x*o.x*o.y*o.y*o.y);
+}
+void main() {
+  float m = inHeart(1.0-textureCoordinate.xy, vec2(0.5, 0.42), 0.44);
+  vec2 dstPos = textureCoordinate;
   dstPos.x = dstPos.x * 1.0/1.0 + 0.0 ;
-  vec3 texel;
-  if (abs(textureCoordinate.x - 0.5) < 0.375 && abs(textureCoordinate.y - 0.5) < 0.375) {
-    texel = texture2D(inputTexture2, dstPos).rgb;
-  }
-  float checkInOutBound = step(abs(textureCoordinate.x - 0.5), 0.366) * step(abs(textureCoordinate.y - 0.5), 0.366);
-  float checkInInBound = step(abs(textureCoordinate.x - 0.5), 0.364) * step(abs(textureCoordinate.y - 0.5), 0.364);
-  float checkInLine = checkInOutBound * (1.0 - checkInInBound);
-  if (checkInLine > 0.5) {
-    texel = mix(texel, vec3(1.0, 1.0, 1.0), 0.4);
-  }
-  gl_FragColor = vec4(texel, 1.0);
-  if (!(abs(textureCoordinate.x - 0.5) < 0.375 && abs(textureCoordinate.y - 0.5) < 0.375)) {
-     gl_FragColor = texture2D(inputImageTexture, textureCoordinate);
+  vec4 texel;
+  if (m > 0.5) {
+      texel = texture2D(inputTexture2, dstPos);
+      gl_FragColor = texel;
+  }else{
+
+        gl_FragColor = texture2D( inputImageTexture, dstPos);
+
   }
 }
 );
