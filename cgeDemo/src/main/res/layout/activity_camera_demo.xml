@@ -1,0 +1,125 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".CameraDemoActivity">
+
+    <FrameLayout
+        android:id="@+id/glviewFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <org.wysaid.view.CameraRecordGLSurfaceView
+            android:id="@+id/myGLSurfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:id="@+id/seekBar"
+            android:layout_gravity="center_horizontal|top" />
+        <TextView
+            android:id="@+id/filter_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </FrameLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/menuLinearLayout">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/takePicBtn"
+                android:textAllCaps="false"
+                android:text="TakePicture"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/takeShotBtn"
+                android:textAllCaps="false"
+                android:text="TakeShot"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/pauseBtn"
+                android:textAllCaps="false"
+                android:text="Pause"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/resumeBtn"
+                android:textAllCaps="false"
+                android:text="Resume"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/switchCameraBtn"
+                android:textAllCaps="false"
+                android:text="Switch"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/recordBtn"
+                android:textAllCaps="false"
+                android:text="Record"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/flashBtn"
+                android:textAllCaps="false"
+                android:text="Flash"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/shapeBtn"
+                android:textAllCaps="false"
+                android:text="Style"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/fitViewBtn"
+                android:textAllCaps="false"
+                android:text="fitScreen"/>
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/customFilterBtn"
+                android:textAllCaps="false"
+                android:text="Custom"
+                android:onClick="customFilterClicked"
+                />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/dynamicFilterBtn"
+                android:textAllCaps="false"
+                android:text="Dynamic"
+                android:onClick="dynamicFilterClicked"
+                />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</RelativeLayout>
