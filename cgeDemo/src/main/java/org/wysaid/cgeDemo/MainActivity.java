@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String effectConfigs[] = {
             "",
+            "@square 1",
             "@double", //Beautify
             "@quad", //Beautify
             "@quadflip", //Beautify
