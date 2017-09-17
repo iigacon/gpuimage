@@ -7,6 +7,7 @@
 
 #include "cgeSquareFrame.h"
 #include <cmath>
+#include <time.h>
 
 const static char* const s_fshSquare = CGE_SHADER_STRING_PRECISION_H
 (
@@ -79,12 +80,19 @@ void main(){
 
 namespace CGE
 {
+    float x_seconds=0.0,x_milliseconds;
+    float count_down_time_in_secs=0.0,time_left=0.0;
+    clock_t x_startTime,x_countTime;
+
 	CGEConstString CGESquareFilter::paramName = "intensity";
 
 	bool CGESquareFilter::init()
 	{
 		if(initShadersFromString(g_vshDefaultWithoutTexCoord, s_fshSquare))
 		{
+            count_down_time_in_secs=0;
+            x_startTime=clock();
+            time_left=count_down_time_in_secs+x_seconds;
 			return true;
 		}
 		return false;
@@ -99,7 +107,14 @@ namespace CGE
     void CGESquareFilter::render2Texture(CGEImageHandlerInterface* handler, GLuint srcTexture, GLuint vertexBufferID)
     {
         m_program.bind();
-        m_program.sendUniformf("iTime", clock() / (CLOCKS_PER_SEC * 1.0f));
+        x_countTime=clock();
+        x_milliseconds=x_countTime-x_startTime;
+        x_seconds=(float)((int)(5.0*(x_milliseconds/(CLOCKS_PER_SEC))));
+        if(time_left!=count_down_time_in_secs+x_seconds)
+        {
+           m_program.sendUniformf("iTime", clock() / (CLOCKS_PER_SEC * 1.0f));
+           time_left=count_down_time_in_secs+x_seconds/5.0;
+        }
         CGEImageFilterInterface::render2Texture(handler, srcTexture, vertexBufferID);
     }
 

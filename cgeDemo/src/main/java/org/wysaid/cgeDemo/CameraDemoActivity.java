@@ -268,7 +268,7 @@ public class CameraDemoActivity extends AppCompatActivity {
         mCameraView.presetRecordingSize(480, 640);
 
         //Taking picture size.
-        mCameraView.setPictureSize(2048, 2048, true); // > 4MP
+        mCameraView.setPictureSize(1080, 1080, true); // > 4MP
         mCameraView.setZOrderOnTop(false);
         mCameraView.setZOrderMediaOverlay(true);
 

@@ -40,11 +40,11 @@ public class CameraInstance {
     private int mPreviewWidth;
     private int mPreviewHeight;
 
-    private int mPictureWidth = 2048;
-    private int mPictureHeight = 2048;
+    private int mPictureWidth = 1080;
+    private int mPictureHeight = 1080;
 
-    private int mPreferPreviewWidth = 2048;
-    private int mPreferPreviewHeight = 2048;
+    private int mPreferPreviewWidth = 1080;
+    private int mPreferPreviewHeight = 1080;
 
     private int mFacing = 0;
 

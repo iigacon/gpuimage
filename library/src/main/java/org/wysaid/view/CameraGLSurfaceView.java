@@ -50,8 +50,8 @@ public class CameraGLSurfaceView extends GLSurfaceView implements GLSurfaceView.
     public int viewWidth;
     public int viewHeight;
 
-    protected int mRecordWidth = 720;
-    protected int mRecordHeight = 720;
+    protected int mRecordWidth = 480;
+    protected int mRecordHeight = 480;
 
     protected SurfaceTexture mSurfaceTexture;
     protected int mTextureID;
@@ -62,8 +62,8 @@ public class CameraGLSurfaceView extends GLSurfaceView implements GLSurfaceView.
         return mFrameRecorder;
     }
 
-    public int maxPreviewWidth = 1280;
-    public int maxPreviewHeight = 1280;
+    public int maxPreviewWidth = 1080;
+    public int maxPreviewHeight = 1080;
 
     //The max preview size. Change it to 1920+ if you want to preview with 1080P
     void setMaxPreviewSize(int w, int h) {
@@ -367,7 +367,7 @@ public class CameraGLSurfaceView extends GLSurfaceView implements GLSurfaceView.
 
         mFrameRecorder = new CGEFrameRecorder();
         mIsTransformMatrixSet = false;
-        if(!mFrameRecorder.init(mRecordWidth, mRecordHeight, 720, 720)) {
+        if(!mFrameRecorder.init(mRecordWidth, mRecordHeight, 480, 480)) {
             Log.e(LOG_TAG, "Frame Recorder init failed!");
         }
 
