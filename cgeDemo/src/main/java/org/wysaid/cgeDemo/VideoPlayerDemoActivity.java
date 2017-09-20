@@ -6,16 +6,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import org.apache.http.conn.scheme.HostNameResolver;
 import org.wysaid.common.Common;
 import org.wysaid.myUtils.FileUtil;
 import org.wysaid.myUtils.ImageUtil;
@@ -23,7 +26,51 @@ import org.wysaid.myUtils.MsgUtil;
 import org.wysaid.nativePort.CGEFrameRenderer;
 import org.wysaid.view.VideoPlayerGLSurfaceView;
 
+import java.util.LinkedHashMap;
+
 public class VideoPlayerDemoActivity extends AppCompatActivity {
+
+    public class Position{
+        private String effect;
+        private long startPosition;
+        private long endPosition;
+
+        public Position(String effect, long startPosition, long endPosition) {
+            this.effect = effect;
+            this.startPosition = startPosition;
+            this.endPosition = endPosition;
+        }
+
+        public long getStartPosition() {
+            return startPosition;
+        }
+
+        public void setStartPosition(long startPosition) {
+            this.startPosition = startPosition;
+        }
+
+        public long getEndPosition() {
+            return endPosition;
+        }
+
+        public void setEndPosition(long endPosition) {
+            this.endPosition = endPosition;
+        }
+
+        public String getEffect() {
+            return effect;
+        }
+
+        public void setEffect(String effect) {
+            this.effect = effect;
+        }
+    }
+
+    private LinkedHashMap<Integer, Position> effectPosition = new LinkedHashMap<>();
+    private long currentPosition;
+    private int currentPart;
+    private int currentPlayPart;
+    private Position currentEffect;
 
     VideoPlayerGLSurfaceView mPlayerView;
     Button mShapeBtn;
@@ -32,13 +79,14 @@ public class VideoPlayerDemoActivity extends AppCompatActivity {
 
     String mCurrentConfig;
 
+
     public static final int REQUEST_CODE_PICK_VIDEO = 1;
 
     private VideoPlayerGLSurfaceView.PlayCompletionCallback playCompletionCallback = new VideoPlayerGLSurfaceView.PlayCompletionCallback() {
         @Override
         public void playComplete(MediaPlayer player) {
             Log.i(Common.LOG_TAG, "The video playing is over, restart...");
-            player.start();
+//            player.start();
         }
 
         @Override
@@ -73,11 +121,36 @@ public class VideoPlayerDemoActivity extends AppCompatActivity {
                         }
                     });
 
-                    player.start();
+//                    player.start();
                 }
             }, playCompletionCallback);
         }
     }
+
+    public Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if (currentEffect == null) {
+                    currentEffect = effectPosition.get(0);
+                    mPlayerView.setFilterWithConfig(currentEffect.getEffect());
+                }
+                try {
+                    if(mPlayerView.getPlayer().getCurrentPosition()>=currentEffect.getEndPosition()){
+                        currentPart+=1;
+                        currentEffect = effectPosition.get(currentPart);
+                        mPlayerView.setFilterWithConfig(currentEffect.getEffect());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                new Handler().postDelayed(runnable, 50);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +159,77 @@ public class VideoPlayerDemoActivity extends AppCompatActivity {
         mPlayerView = (VideoPlayerGLSurfaceView)findViewById(R.id.videoGLSurfaceView);
         mPlayerView.setZOrderOnTop(false);
         mPlayerView.setZOrderMediaOverlay(true);
+
+
+        Button magic_recorder = (Button) findViewById(R.id.magic_recorder);
+        Button magic_recorder2 = (Button) findViewById(R.id.magic_recorder2);
+        Button magic_play = (Button) findViewById(R.id.magic_play);
+
+        magic_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPlayerView.getPlayer().start();
+                new Handler().post(runnable);
+            }
+        });
+
+        magic_recorder.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e("Key", "ACTION_DOWN");
+                        mPlayerView.setFilterWithConfig("@square 1");
+                        mPlayerView.getPlayer().start();
+                        try{
+                            currentPosition = mPlayerView.getPlayer().getCurrentPosition();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e("Key", "ACTION_UP");
+                        try {
+                            currentPart+=1;
+                            effectPosition.put(currentPart, new Position("@square 1", currentPosition, mPlayerView.getPlayer().getCurrentPosition()));
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                        mPlayerView.getPlayer().pause();
+                        break;
+                }
+                return false;
+            }
+        });
+
+        magic_recorder2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        mPlayerView.setFilterWithConfig("@quad");
+                        mPlayerView.getPlayer().start();
+                        try{
+                            currentPosition = mPlayerView.getPlayer().getCurrentPosition();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        try {
+                            currentPart+=1;
+                            effectPosition.put(currentPart, new Position("@quad", currentPosition, mPlayerView.getPlayer().getCurrentPosition()));
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                        mPlayerView.getPlayer().pause();
+                        break;
+                }
+                return false;
+            }
+        });
 
         mShapeBtn = (Button)findViewById(R.id.switchShapeBtn);
 
@@ -160,9 +304,9 @@ public class VideoPlayerDemoActivity extends AppCompatActivity {
                         @Override
                         public void playPrepared(MediaPlayer player) {
                             Log.i(Common.LOG_TAG, "The video is prepared to play");
-                            player.start();
+//                            player.start();
                         }
-                    }, playCompletionCallback);
+                    }, null);
                 }
             });
         }
@@ -275,7 +419,7 @@ public class VideoPlayerDemoActivity extends AppCompatActivity {
                         @Override
                         public void playPrepared(MediaPlayer player) {
                             Log.i(Common.LOG_TAG, "The video is prepared to play");
-                            player.start();
+//                            player.start();
                         }
                     }, playCompletionCallback);
                 }

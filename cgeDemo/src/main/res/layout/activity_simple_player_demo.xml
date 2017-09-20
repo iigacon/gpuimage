@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         >
 
-        <org.wysaid.view.SimplePlayerGLSurfaceView
+        <org.wysaid.view.VideoPlayerGLSurfaceView
             android:id="@+id/videoGLSurfaceView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -32,6 +32,8 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:id="@+id/menuLinearLayout">
+
+
 
             <Button
                 android:layout_width="100dp"

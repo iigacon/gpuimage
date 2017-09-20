@@ -117,7 +117,7 @@ public class TestCaseActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Bitmap src = BitmapFactory.decodeResource(TestCaseActivity.this.getResources(), R.drawable.bgview);
+                Bitmap src = BitmapFactory.decodeResource(TestCaseActivity.this.getResources(), R.drawable.ef0);
                 int maxIndex = CGENativeLibrary.cgeGetCustomFilterNum();
                 SharedContext glContext = SharedContext.create();
                 glContext.makeCurrent();
@@ -147,8 +147,8 @@ public class TestCaseActivity extends AppCompatActivity {
         mThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Bitmap src = BitmapFactory.decodeResource(TestCaseActivity.this.getResources(), R.drawable.bgview);
-                int maxIndex = MainActivity.effectConfigs.length;
+                Bitmap src = BitmapFactory.decodeResource(TestCaseActivity.this.getResources(), R.drawable.meo);
+                int maxIndex = MainActivity.effect.length;
 
                 SharedContext glContext = SharedContext.create();
                 glContext.makeCurrent();
@@ -160,7 +160,7 @@ public class TestCaseActivity extends AppCompatActivity {
 
                 for(int i = 0; i != maxIndex && !mShouldStopThread; ++i) {
 
-                    final String filterConfig = MainActivity.effectConfigs[i];
+                    final String filterConfig = MainActivity.effect[i];
                     handler.setFilterWithConfig(filterConfig);
                     handler.processingFilters();
 

@@ -6,11 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -28,12 +30,19 @@ import org.wysaid.texUtils.TextureRendererMask;
 import org.wysaid.texUtils.TextureRendererWave;
 import org.wysaid.view.SimplePlayerGLSurfaceView;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 public class SimplePlayerDemoActivity extends AppCompatActivity {
+
+
 
     SimplePlayerGLSurfaceView mPlayerView;
     Button mShapeBtn;
     Button mTakeshotBtn;
     Button mGalleryBtn;
+
+
 
     public static final int REQUEST_CODE_PICK_VIDEO = 1;
 
@@ -41,7 +50,7 @@ public class SimplePlayerDemoActivity extends AppCompatActivity {
         @Override
         public void playComplete(MediaPlayer player) {
             Log.i(Common.LOG_TAG, "The video playing is over, restart...");
-            player.start();
+//            player.start();
         }
 
         @Override
@@ -82,7 +91,7 @@ public class SimplePlayerDemoActivity extends AppCompatActivity {
                         }
                     });
 
-                    player.start();
+//                    player.start();
                 }
             }, playCompletionCallback);
         }
@@ -94,6 +103,8 @@ public class SimplePlayerDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_simple_player_demo);
         mPlayerView = (SimplePlayerGLSurfaceView)findViewById(R.id.videoGLSurfaceView);
 //        mPlayerView.setZOrderOnTop(false);
+
+
 
         mShapeBtn = (Button)findViewById(R.id.switchShapeBtn);
 
@@ -185,7 +196,7 @@ public class SimplePlayerDemoActivity extends AppCompatActivity {
                         @Override
                         public void playPrepared(MediaPlayer player) {
                             Log.i(Common.LOG_TAG, "The video is prepared to play");
-                            player.start();
+//                            player.start();
                         }
                     }, playCompletionCallback);
                 }
@@ -328,7 +339,7 @@ public class SimplePlayerDemoActivity extends AppCompatActivity {
                         @Override
                         public void playPrepared(MediaPlayer player) {
                             Log.i(Common.LOG_TAG, "The video is prepared to play");
-                            player.start();
+//                            player.start();
                         }
                     }, playCompletionCallback);
                 }

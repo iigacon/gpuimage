@@ -126,10 +126,17 @@ public class CameraDemoActivity extends AppCompatActivity {
         Button takePicBtn = (Button) findViewById(R.id.takePicBtn);
         Button takeShotBtn = (Button) findViewById(R.id.takeShotBtn);
         Button recordBtn = (Button) findViewById(R.id.recordBtn);
+        Button magic_recorder = (Button) findViewById(R.id.magic_recorder);
+        Button magic_recorder2 = (Button) findViewById(R.id.magic_recorder2);
+
         filter_config = (TextView) findViewById(R.id.filter_config);
         mCameraView = (CameraRecordGLSurfaceView)findViewById(R.id.myGLSurfaceView);
         mCameraView.presetCameraForward(false);
         SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+
+
+
+
 
         takePicBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -25,6 +25,17 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = "wysaid";
 
+    public static final String effect[] = {
+//        "@square 1",
+        "@double 1", //Beautify
+//        "@quad", //Beautify
+//        "@quadflip", //Beautify
+//        "@hexa", //Beautify
+//        "@triple 1", //Beautify
+//        "@zoom 1", //Beautify
+//        "@heart 1", //Beautify
+    };
+
     public static final String effectConfigs[] = {
             "",
             "@square 1",

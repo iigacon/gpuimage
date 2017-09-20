@@ -38,6 +38,25 @@
 
             <Button
                 android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/magic_recorder"
+                android:textAllCaps="false"
+                android:text="Magic Recorder"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/magic_recorder2"
+                android:textAllCaps="false"
+                android:text="Magic Recorder 2"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:id="@+id/magic_play"
+                android:textAllCaps="false"
+                android:text="Magic Play"/>
+
+            <Button
+                android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:id="@+id/galleryBtn"
                 android:text="Gallery"
